@@ -1,0 +1,21 @@
+{
+  "name": "socialapi",
+  "version": "1.0.0",
+  "description": "GIVEN a social network API\r WHEN I enter the command to invoke the application\r THEN my server is started and the Mongoose models are synced to the MongoDB database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scicluna/socialapi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scicluna/socialapi/issues"
+  },
+  "homepage": "https://github.com/scicluna/socialapi#readme"
+}
