@@ -2,7 +2,7 @@ const { Schema, Types } = require ('mongoose')
 
 const reactionSchema = new Schema(
     {
-        reactionId: {
+        _id: {
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId()
         },
@@ -20,9 +20,6 @@ const reactionSchema = new Schema(
             default: Date.now
         }
     },
-    {
-        id: false,
-    }
 );
 
 module.exports = reactionSchema;

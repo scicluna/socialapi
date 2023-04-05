@@ -25,11 +25,11 @@ module.exports = {
 
     async postThought(req, res){
         try{
-            const thought = await Thought.create(req.body);
-            const user = await User.findOne({userName: thought.userName});
-
+            const user = await User.findOne({userName: req.body.userName});
             if (!user) return res.status(400).json({message: 'User not Found'});
 
+            const thought = await Thought.create(req.body);
+            
             await User.findByIdAndUpdate(user._id, {
                 $push: {thoughts: thought}
             });
@@ -61,7 +61,7 @@ module.exports = {
             const thought = await Thought.findOneAndRemove({_id: req.params.id})
             if (!thought) return res.status(400).json({message: 'No thought found with that ID'})
 
-            res.json(thought)
+            res.json({message: 'Thought deleted'})
         }
         catch(err){
             res.status(500).json(err);
@@ -88,8 +88,9 @@ module.exports = {
             const thought = await Thought.findOne({_id: req.params.id});
             if (!thought) return res.status(400).json({message: 'No thought found with that ID'});
 
-            await Thought.updateOne({_id: req.params.id}, {$pull: { reactions: {reactionId: req.body}}})
-            res.json({message: 'Reaction removed successfully'});
+            const reaction = await Thought.findOneAndUpdate({_id: req.params.id}, {$pull: { reactions: { _id: req.params.reactionId } }}, { new: true })
+
+            res.json(reaction);
         }
         catch(err){
             res.status(500).json(err);

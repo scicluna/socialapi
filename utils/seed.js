@@ -1,5 +1,6 @@
 const connection = require('../config/connection')
 const {User, Thought} = require('../models')
+const { Types } = require('mongoose');
 
 connection.on('error', (err) => err);
 
@@ -58,7 +59,8 @@ connection.once('open', async () => {
 
         for (let i=0; i<reactionCount; i++){
             const randomIndex = Math.floor(Math.random()* reactions.length)
-            randomReactions.push(reactions[randomIndex])
+            const reaction = { ...reactions[randomIndex], _id: new Types.ObjectId() };
+            randomReactions.push(reaction)
         }
 
         return randomReactions
