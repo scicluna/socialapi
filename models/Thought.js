@@ -11,7 +11,7 @@ const thoughtSchema = new Schema(
             type: Date,
             default: Date.now
         },
-        username: {
+        userName: {
             type: String,
             required: true
         },

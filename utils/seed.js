@@ -30,4 +30,12 @@ connection.once('open', async () => {
         {userName: 'Ryan', email: 'ryan@ryan.com'}
     ];
 
-})
+    await User.collection.insertMany(users)
+    
+    //add thought seeding here -- also need logic for random reactions to those thoughts
+    //users should also have thoughts and friends... Not sure how to do this tbh...
+
+    console.table(users);
+    console.info('Seeding complete! 🌱');
+    process.exit(0);
+});
