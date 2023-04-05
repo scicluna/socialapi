@@ -115,27 +115,25 @@ connection.once('open', async () => {
     //seed user friends
     for (const user of users){
 
-        const rng = Math.floor(Math.random()*5)
+        const rng = Math.floor(Math.random()*5);
 
         for (let i=0; i<rng; i++){
 
             let friendName;
-            while(friendName !== user.userName){
-                friendName = getRandomUserName(users)
+            while(friendName == user.userName || !friendName){
+                friendName = getRandomUserName(users);
             }
     
-            const editUser = await User.findOne({userName: user.userName})
+            const editUser = await User.findOne({userName: user.userName});
             const friend = await User.findOne({userName: friendName});
-    
-            await User.findByIdAndUpdate(editUser._id, {
-                $push: {friends: friend}
-            })
+
+            if(!editUser.friends || !editUser.friends.some(id => id?.equals(friend._id))){
+                await User.findByIdAndUpdate(editUser._id, {
+                    $push: {friends: friend}
+                });
+            }
         }
     }
-
-    
-    //add thought seeding here -- also need logic for random reactions to those thoughts
-    //users should also have thoughts and friends... Not sure how to do this tbh...
 
     console.table(users);
     console.table(thoughts)
