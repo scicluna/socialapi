@@ -31,11 +31,112 @@ connection.once('open', async () => {
     ];
 
     await User.collection.insertMany(users)
+    console.log('Users Created!')
+
+    const getRandomUserName = (users) => {
+        const rng = Math.floor(Math.random()*users.length)
+        return users[rng].userName
+    }
+
+    const getRandomReactions = (maxReactions) => {
+        const reactionCount = Math.floor(Math.random()*maxReactions)
+
+        const reactions = [
+            {reactionBody: 'Cool!', userName: getRandomUserName(users)},
+            {reactionBody: 'Bad!', userName: getRandomUserName(users)},
+            {reactionBody: 'Amazing!', userName: getRandomUserName(users)},
+            {reactionBody: 'Great!', userName: getRandomUserName(users)},
+            {reactionBody: 'Love it!', userName: getRandomUserName(users)},
+            {reactionBody: 'Hate it!', userName: getRandomUserName(users)},
+            {reactionBody: 'Fantastic!', userName: getRandomUserName(users)},
+            {reactionBody: 'Nice!', userName: getRandomUserName(users)},
+            {reactionBody: 'Sweet!', userName: getRandomUserName(users)},
+            {reactionBody: 'Ew!', userName: getRandomUserName(users)},
+        ]
+
+        const randomReactions = []
+
+        for (let i=0; i<reactionCount; i++){
+            const randomIndex = Math.floor(Math.random()* reactions.length)
+            randomReactions.push(reactions[randomIndex])
+        }
+
+        return randomReactions
+    }
+    
+    const thoughts = [
+        {thoughtText: 'hello world!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello guys!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello people!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello country!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello computer!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello music!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello test!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello yellow!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello mello!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello water!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello weather!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello today!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello yesterday!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello tomorrow!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello future!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello past!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello present!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello users!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello thoughts!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello reactions!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello cyberpunk!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello darkness!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello light!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello noon!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello june!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello moon!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello tune!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello phone!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello tone!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello booze!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello slack!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+        {thoughtText: 'hello mac!', userName: getRandomUserName(users), reactions: getRandomReactions(5)},
+    ]
+
+    await Thought.collection.insertMany(thoughts)
+
+    //seed user thoughts
+    for (const thought of thoughts){
+        const user = await User.findOne({userName: thought.userName});
+
+        await User.findByIdAndUpdate(user._id, {
+            $push: {thoughts: thought}
+        });
+    }
+
+    //seed user friends
+    for (const user of users){
+
+        const rng = Math.floor(Math.random()*5)
+
+        for (let i=0; i<rng; i++){
+
+            let friendName;
+            while(friendName !== user.userName){
+                friendName = getRandomUserName(users)
+            }
+    
+            const editUser = await User.findOne({userName: user.userName})
+            const friend = await User.findOne({userName: friendName});
+    
+            await User.findByIdAndUpdate(editUser._id, {
+                $push: {friends: friend}
+            })
+        }
+    }
+
     
     //add thought seeding here -- also need logic for random reactions to those thoughts
     //users should also have thoughts and friends... Not sure how to do this tbh...
 
     console.table(users);
+    console.table(thoughts)
     console.info('Seeding complete! 🌱');
     process.exit(0);
 });

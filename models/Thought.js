@@ -4,7 +4,7 @@ const reactionSchema = require('./Reaction')
 const thoughtSchema = new Schema(
     {
         thoughtText: {
-            type: Schema.Types.ObjectId,
+            type: String,
             required: true
         },
         createdAt: {
