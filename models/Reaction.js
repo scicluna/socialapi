@@ -1,4 +1,4 @@
-const { Schema, Types } = require ('mongoose')
+const { Schema, Types } = require('mongoose')
 
 const reactionSchema = new Schema(
     {
@@ -11,13 +11,13 @@ const reactionSchema = new Schema(
             required: true,
             maxlength: 280
         },
-        userName:{
+        userName: {
             type: String,
             required: true
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
         }
     },
 );
