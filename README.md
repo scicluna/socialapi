@@ -1,13 +1,32 @@
-GIVEN a social network API
-WHEN I enter the command to invoke the application
-THEN my server is started and the Mongoose models are synced to the MongoDB database
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+  
+  # Social Media API
 
-WHEN I open API GET routes in Insomnia for users and thoughts
-THEN the data for each of these routes is displayed in a formatted JSON
+  ## Description
 
-WHEN I test API POST, PUT, and DELETE routes in Insomnia
-THEN I am able to successfully create, update, and delete users and thoughts in my database
+  This project is a demo for a social media API using mongoDB and mongoose.
 
-WHEN I test API POST and DELETE routes in Insomnia
-THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
+  ## Table of Contents
 
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [License](#license)
+  - [Questions](#questions)
+
+  ## Installation
+
+  npm i
+
+  ## Usage
+
+  To interface with this project, you have to use a program like Insomnia to send http requests to the API.
+
+  ## License
+
+  This application is covered under the MIT license. Read more at [License: MIT](https://opensource.org/licenses/MIT)
+
+  ## Questions
+
+  1. Where can I find your github so that I can view your other projects? https://github.com/scicluna
+
+  2. What email address should I use to contact you regarding further opportunities or questions? sciclunajl@gmail.com
